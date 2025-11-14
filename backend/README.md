@@ -354,6 +354,53 @@ Ejemplo de log:
 ### Puerto ya en uso
 - Cambia el puerto en `.env` o termina el proceso que está usando el puerto 3001
 
+## 📸 Evidencia de Pruebas
+
+Se realizaron pruebas manuales exhaustivas de todos los endpoints. Las capturas de pantalla que demuestran el funcionamiento correcto del backend se encuentran en [`docs/screenshots/`](./docs/screenshots/).
+
+### Capturas principales:
+
+#### 1. Servidor iniciado correctamente
+![Servidor iniciado](docs/screenshots/evidencia-01.png)
+*Servidor corriendo en puerto 3001 con todos los endpoints disponibles y Google Sheets API inicializada*
+
+#### 2. Health Check exitoso
+![Health Check](docs/screenshots/evidencia-02.png)
+*Endpoint `/health` respondiendo correctamente con status 200*
+
+#### 3. GET `/api/rates` - Todas las tasas
+![GET Rates - Todas las tasas](docs/screenshots/evidencia-03.png)
+*Endpoint GET `/api/rates` retornando todas las tasas de cambio (CLP y PEN)*
+
+#### 4. GET `/api/rates` con filtro por target
+![GET Rates - Target CLP](docs/screenshots/evidencia-04.png)
+*Endpoint GET `/api/rates?target=CLP` filtrando correctamente solo la tasa de CLP*
+
+#### 5. Manejo de errores - Moneda inválida
+![Error 400](docs/screenshots/evidencia-05.png)
+*Manejo correcto de errores: retorna 400 cuando se envía una moneda inválida*
+
+#### 6. POST `/api/subscribe` exitoso
+![POST Subscribe](docs/screenshots/evidencia-06.png)
+*Endpoint POST `/api/subscribe` guardando datos correctamente en Google Sheets*
+
+#### 7. Datos guardados en Google Sheets
+![Google Sheets](docs/screenshots/evidencia-07.png)
+*Verificación en Google Spreadsheet: los datos se guardaron correctamente con timestamp, name y email*
+
+### Resumen de pruebas realizadas:
+
+Estas capturas confirman que:
+- ✅ El servidor inicia correctamente con todas las dependencias
+- ✅ Los endpoints responden con los códigos HTTP esperados (200, 400, 500)
+- ✅ La validación de queries funciona correctamente
+- ✅ El manejo de errores es coherente y descriptivo
+- ✅ La integración con Google Sheets funciona correctamente
+- ✅ Los datos se guardan en el spreadsheet público con el formato esperado
+- ✅ El logging de requests funciona en consola
+
+Todas las capturas de pantalla están disponibles en [`docs/screenshots/`](docs/screenshots/).
+
 ## 📝 Licencia
 
 Este proyecto es parte de una prueba técnica para Global66.
