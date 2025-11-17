@@ -21,11 +21,30 @@ let auth = null
  */
 function initializeGoogleSheets() {
   try {
-    const credentialsPath = process.env.GOOGLE_SHEETS_CREDENTIALS_PATH || 
-      path.join(__dirname, 'google-credentials.json')
+    let credentials = null
+    
+    // Opción 1: Leer desde variable de entorno (base64) - para Railway/producción
+    if (process.env.GOOGLE_SHEETS_CREDENTIALS_BASE64) {
+      const credentialsJson = Buffer.from(process.env.GOOGLE_SHEETS_CREDENTIALS_BASE64, 'base64').toString('utf-8')
+      credentials = JSON.parse(credentialsJson)
+    }
+    // Opción 2: Leer desde archivo - para desarrollo local
+    else {
+      const credentialsPath = process.env.GOOGLE_SHEETS_CREDENTIALS_PATH || 
+        path.join(__dirname, 'google-credentials.json')
+      
+      // Si existe el archivo, leerlo
+      if (require('fs').existsSync(credentialsPath)) {
+        credentials = require(credentialsPath)
+      }
+    }
+    
+    if (!credentials) {
+      throw new Error('No se encontraron credenciales de Google Sheets')
+    }
     
     auth = new google.auth.GoogleAuth({
-      keyFile: credentialsPath,
+      credentials: credentials,
       scopes: ['https://www.googleapis.com/auth/spreadsheets']
     })
 
